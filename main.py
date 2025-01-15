@@ -1,11 +1,17 @@
 from flask import Flask, render_template, request, redirect
 from pymongo import MongoClient
 import random
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
-# MongoDB setup
-client = MongoClient("mongodb://localhost:27017/")
+# MongoDB setup using URI from environment variable
+mongo_uri = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
+client = MongoClient(mongo_uri)
 db = client['tale_teller']
 stories_collection = db['stories']
 
